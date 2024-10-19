@@ -110,9 +110,9 @@ getCardsCollection = async (req, res) => {
 };
 
 getCardsByAddress = async (req, res) => {
-  const {userAddress} = req.body;
+  const {address} = req.query;
   try {
-    const [collectionIds, cardIds] = await mainContract.getAllCardsOwnedByUser(userAddress);
+    const [collectionIds, cardIds] = await mainContract.getAllCardsOwnedByUser(address);
     const ownedCards = await Promise.all(collectionIds.map(async (collectionId, index) => {
       const cardId = cardIds[index].toNumber();
       const cardMetadata = await mainContract.getCardMetadata(collectionId.toNumber(), cardId);
@@ -156,7 +156,7 @@ initCardsToCollection = async () => {
       console.log(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`)
       const response = await axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`);
       const cards = response.data.data;
-      for (let i=0; i < 5; i++) {
+      for (let i=0; i < cards.length; i++) {
         const card = cards[i];
         const rarity = card
           .card_sets

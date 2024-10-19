@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './styles.module.css'
+import {BrowserRouter as Router, NavLink, Route, Routes} from 'react-router-dom';
 import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
+import Header from '@/components/Header'
+import MyCollections from '@/components/MyCollections'
 
 type Canceler = () => void
 const useAffect = (
@@ -40,10 +43,17 @@ const useWallet = () => {
 }
 
 export const App = () => {
-  const wallet = useWallet()
+  const wallet = useWallet();
+
   return (
-    <div className={styles.body}>
-      <h1>Welcome to Pokémon TCG</h1>
-    </div>
-  )
+    <Router>
+      <Header wallet={wallet} />
+      <Routes>
+        <Route path="/" element={<div>All Cards Collection</div>} />
+        <Route path="/marketplace" element={<div>Duel Marketplace</div>} />
+        <Route path="/my-collections" element={<MyCollections wallet={wallet}/>} />
+        <Route path="/boosters" element={<div>My Booster Packs</div>} />
+      </Routes>
+    </Router>
+  );
 }

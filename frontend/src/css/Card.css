@@ -1,0 +1,59 @@
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.card-details h3 {
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+
+.card-details p {
+    margin: 5px 0;
+}
+
+.rarity {
+    font-weight: bold;
+}
+
+.rarity.super-rare {
+    color: #ffd700; /* Or pour les cartes super rares */
+}
+
+.redeem-button {
+    background-color: #b30000;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.redeem-button:hover {
+    background-color: #ff4d4d;
+}
+
+.redeem-button.disabled {
+    background-color: grey;
+    cursor: not-allowed;
+}

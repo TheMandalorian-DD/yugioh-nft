@@ -6,13 +6,14 @@ const { addCollection, getAllCollections, mintCard, getCardsCollection, getCards
   initCardsToCollection
 } = require('./controllers/userController')
 const timers = require('node:timers')
+const cors = require('cors')
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.use(cors({origin:"*"}))
 
 initCollections().then(r => {
   setTimeout(initCardsToCollection, 3000);
