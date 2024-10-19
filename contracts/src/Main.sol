@@ -46,14 +46,10 @@ contract Main is Ownable {
   event DebugEvent(string message);
 
   function mintCardToUser(uint256 collectionId, address to, string memory realID, string memory cardName, string memory cardImage, string memory rarity, bool redeem, uint256 quantity) external {
-    emit DebugEvent("Entered mintCardToUser");
-
     require(collectionId < collectionCounter, "Collection does not exist");
     require(quantity > 0, "Quantity must be greater than 0");
 
     Collection collection = Collection(collections[collectionId].collectionAddress);
-
-    emit DebugEvent("About to mint multiple cards for user");
 
     for (uint256 i = 0; i < quantity; i++) {
       uint256 cardId = collection.mintTo(to, realID, cardName, cardImage, rarity, redeem);
@@ -90,8 +86,8 @@ contract Main is Ownable {
     for (uint256 i = 0; i < collectionCounter; i++) {
       Collection collection = Collection(collections[i].collectionAddress);
       for (uint256 j = 0; j < collections[i].cardCount; j++) {
-        try collection.ownerOf(j) returns (address owner) {
-          if (owner == user) {
+        try collection.ownerOf(j) returns (address cardOwner) {
+          if (cardOwner == user) {
             totalCardsCount++;
           }
         } catch {
@@ -106,8 +102,8 @@ contract Main is Ownable {
     for (uint256 i = 0; i < collectionCounter; i++) {
       Collection collection = Collection(collections[i].collectionAddress);
       for (uint256 j = 0; j < collections[i].cardCount; j++) {
-        try collection.ownerOf(j) returns (address owner) {
-          if (owner == user) {
+        try collection.ownerOf(j) returns (address cardOwner) {
+          if (cardOwner == user) {
             collectionIds[index] = i;
             cardIds[index] = j;
             index++;

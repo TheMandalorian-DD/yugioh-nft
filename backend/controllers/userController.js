@@ -19,7 +19,8 @@ const wallet = new ethers.Wallet(privateKey, provider);
 const mainContract = new ethers.Contract(mainContractAddress, mainContractABI.abi, wallet);
 
 // Route pour créer une collection
-exports.addCollection = async (req, res) => {
+addCollection = async (req, res) => {
+  const { collectionName, cardCount } = req.body;
   try {
     const response = await axios.get(`https://db.ygoprodeck.com/api/v7/cardsets.php`);
     const set = response.data[0];
@@ -37,7 +38,7 @@ exports.addCollection = async (req, res) => {
   }
 };
 
-exports.mintCard = async (req, res) => {
+mintCard = async (req, res) => {
   const { collectionId, userAddress, quantity} = req.body;
   try {
     const collection= await mainContract.getCollectionInfo(collectionId);
@@ -60,7 +61,7 @@ exports.mintCard = async (req, res) => {
   }
 };
 
-exports.getAllCollections = async (req, res) => {
+getAllCollections = async (req, res) => {
   try {
     const collections = await mainContract.getAllCollections();
     const result = collections.map((collection, index) => ({
@@ -75,7 +76,8 @@ exports.getAllCollections = async (req, res) => {
   }
 };
 
-exports.getCardsCollection = async (req, res) => {
+
+getCardsCollection = async (req, res) => {
   const { collectionId, userAddress } = req.body;
 
   try {
@@ -107,7 +109,7 @@ exports.getCardsCollection = async (req, res) => {
   }
 };
 
-exports.getCardsByAddress = async (req, res) => {
+getCardsByAddress = async (req, res) => {
   const {userAddress} = req.body;
   try {
     const [collectionIds, cardIds] = await mainContract.getAllCardsOwnedByUser(userAddress);
@@ -131,3 +133,51 @@ exports.getCardsByAddress = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+initCollections = async () => {
+  try {
+    const response = await axios.get(`https://db.ygoprodeck.com/api/v7/cardsets.php`);
+
+    for(let i = 2; i < 4; i++) {
+      const tx = await mainContract.createCollection(response.data[i].set_name, response.data[i].num_of_cards);
+      await tx.wait();
+      console.log(`${response.data[i].set_name} collection created`);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+initCardsToCollection = async () => {
+  try {
+    const collections = await mainContract.getAllCollections();
+    for (const collection of collections) {
+      const index = collections.indexOf(collection)
+      console.log(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`)
+      const response = await axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`);
+      const cards = response.data.data;
+      for (let i=0; i < 5; i++) {
+        const card = cards[i];
+        const rarity = card
+          .card_sets
+          .find(set => set.set_name === collection.name)
+          .set_rarity;
+        const tx = await mainContract.mintCardToUser(index, collection.collectionAddress, card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
+        await tx.wait();
+        console.log(`${card.name} added to ${collection.name} (${collection.collectionAddress})`);
+      }
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = {
+  initCollections,
+  initCardsToCollection,
+  addCollection,
+  mintCard,
+  getAllCollections,
+  getCardsCollection,
+  getCardsByAddress
+}

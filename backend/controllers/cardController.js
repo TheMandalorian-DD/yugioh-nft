@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-exports.getCards = async (req, res) => {
+getCards = async (req, res) => {
   const { type, attribute, level, name, language, archetype, race, set } = req.query;
 
   let query = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?';
@@ -38,7 +38,7 @@ exports.getCards = async (req, res) => {
   }
 };
 
-exports.getAllSets = async (req, res) => {
+getAllSets = async (req, res) => {
 
   let query = 'https://db.ygoprodeck.com/api/v7/cardsets.php';
 
@@ -51,7 +51,7 @@ exports.getAllSets = async (req, res) => {
   }
 };
 
-exports.getCardSetInfo = async (req, res) => {
+getCardSetInfo = async (req, res) => {
   const { setcode } = req.query;
 
   let query = `https://db.ygoprodeck.com/api/v7/cardsetsinfo.php?setcode=${encodeURIComponent(setcode)}`;
@@ -65,7 +65,7 @@ exports.getCardSetInfo = async (req, res) => {
   }
 };
 
-exports.getAllArchetypes = async (req, res) => {
+getAllArchetypes = async (req, res) => {
   try {
     const response = await axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php');
     res.json(response.data);
@@ -76,7 +76,7 @@ exports.getAllArchetypes = async (req, res) => {
 };
 
 // Récupérer une carte aléatoire
-exports.getRandomCard = async (req, res) => {
+getRandomCard = async (req, res) => {
   try {
     const response = await axios.get('https://db.ygoprodeck.com/api/v7/randomcard.php');
     const card = response.data;
@@ -100,3 +100,11 @@ exports.getRandomCard = async (req, res) => {
     res.status(500).send('Erreur serveur');
   }
 };
+
+module.exports = {
+  getCards,
+  getAllSets,
+  getCardSetInfo,
+  getAllArchetypes,
+  getRandomCard
+}

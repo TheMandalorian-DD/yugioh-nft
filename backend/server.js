@@ -2,7 +2,10 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { getCards, getAllArchetypes, getSets, getRandomCard, getCardsBySet, getAllSets, getCardSetInfo } = require('./controllers/cardController')
 const { getRaces, getTypes } = require('./controllers/typeRaceController')
-const { addCollection, getAllCollections, mintCard, getCardsCollection, getCardsByAddress } = require('./controllers/userController')
+const { addCollection, getAllCollections, mintCard, getCardsCollection, getCardsByAddress, initCollections,
+  initCardsToCollection
+} = require('./controllers/userController')
+const timers = require('node:timers')
 
 dotenv.config();
 
@@ -10,6 +13,10 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+initCollections().then(r => {
+  setTimeout(initCardsToCollection, 3000);
+});
 
 app.get('/', (req, res) => {
   res.send('Hello!');
