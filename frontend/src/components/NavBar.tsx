@@ -22,7 +22,7 @@ const NavBar: React.FC<Props> = ({ wallet }) => {
         <li>
           <NavLink to="/boosters" className={(navData) => navData.isActive ? "active" : ""}>My Boosters</NavLink>
         </li>
-        <div>{wallet?.details.account ? "OK" : "KO"}</div>
+        <div>{wallet?.details.account ? "Account : " + wallet?.details.account : "Metamask KO"}</div>
       </ul>
     </nav>
   );

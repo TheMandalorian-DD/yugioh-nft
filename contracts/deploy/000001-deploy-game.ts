@@ -7,7 +7,7 @@ const deployer: DeployFunction = async hre => {
   await hre.deployments.deploy('Main', {
     from: deployer,
     log: true,
-    gasLimit: 8000000
+    gasLimit: 10000000
   })
 }
 export default deployer

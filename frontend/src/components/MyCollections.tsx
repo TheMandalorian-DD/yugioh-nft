@@ -20,9 +20,11 @@ const MyCollections: React.FC<CollectionProps> = ({wallet}) => {
   const [walletAddress, setWalletAddress] = useState<string>("");
 
   useEffect(() => {
+    if (wallet?.details.account) {
       getCollections();
-      console.log(collectionData);
-  }, []);
+      setWalletAddress(wallet.details.account);
+    }
+  }, [wallet]);
 
   const getCollections = () => {
     // Ensure wallet and wallet.details.account are defined
@@ -43,9 +45,10 @@ const MyCollections: React.FC<CollectionProps> = ({wallet}) => {
       ) : (
         collectionData.map((collection) => (
           <UserCollection
-            key={collection.collectionId}  // Ajoutez une clé unique
+            key={collection.collectionId}
+            collectionId={collection.collectionId}// Ajoutez une clé unique
             collectionName={collection.name}
-            collectionAddress={collection.collectionAddress}
+            wallet={wallet}
           />
         ))
       )}

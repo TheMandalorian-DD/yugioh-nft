@@ -6,7 +6,8 @@ import axios from 'axios'
 
 interface UserCollectionProps {
   collectionName: string;
-  collectionAddress: string;
+  collectionId: number;
+  wallet: any;
 }
 
 interface CardItem {
@@ -19,20 +20,23 @@ interface CardItem {
   redeem: boolean;
 }
 
-const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collectionAddress }) => {
+const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collectionId, wallet }) => {
 
   const [cardData, setCardData] = useState<CardItem[] | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string>("");
 
   useEffect(() => {
-    getCards()
-  }, []);
+    if (wallet?.details.account) {
+      getCards();
+      setWalletAddress(wallet.details.account);
+    }
+  }, [wallet]);
 
   const getCards = () => {
     axios
-      .get(`http://localhost:3000/get-cards-by-address?address=${collectionAddress}`)
+      .get(`http://localhost:3000/get-cards-by-address?address=${wallet?.details.account}`)
       .then((response) => {
-        setCardData(response.data.ownedCards);
-        console.log("cards : " + JSON.stringify(response.data));
+        setCardData(response.data.ownedCards.filter((card: CardItem) => card.collectionId == collectionId));
       })
       .catch((error) => {
         console.error('Error fetching data:', error);

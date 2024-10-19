@@ -29,7 +29,7 @@ const useWallet = () => {
   const [details, setDetails] = useState<ethereum.Details>()
   const [contract, setContract] = useState<main.Main>()
   useAffect(async () => {
-    const details_ = await ethereum.connect('metamask')
+    const details_ = await ethereum.connect('silent')
     if (!details_) return
     setDetails(details_)
     const contract_ = await main.init(details_)

@@ -156,13 +156,24 @@ initCardsToCollection = async () => {
       console.log(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`)
       const response = await axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php?set=${encodeURIComponent(collection.name)}`);
       const cards = response.data.data;
-      for (let i=0; i < cards.length; i++) {
+      let i;
+      for (i = 0; i < cards.length/2; i++) {
         const card = cards[i];
         const rarity = card
           .card_sets
           .find(set => set.set_name === collection.name)
           .set_rarity;
-        const tx = await mainContract.mintCardToUser(index, collection.collectionAddress, card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
+        const tx = await mainContract.mintCardToUser(index, "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
+        await tx.wait();
+        console.log(`${card.name} added to ${collection.name} (${collection.collectionAddress})`);
+      }
+      for (let y = i; y < cards.length; y++) {
+        const card = cards[y];
+        const rarity = card
+          .card_sets
+          .find(set => set.set_name === collection.name)
+          .set_rarity;
+        const tx = await mainContract.mintCardToUser(index, "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
         await tx.wait();
         console.log(`${card.name} added to ${collection.name} (${collection.collectionAddress})`);
       }
