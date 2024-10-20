@@ -1,0 +1,50 @@
+/* styles/globals.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .header {
+    background-color: #282c34;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+  
+  .collection-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 2rem;
+  }
+  
+  .collection-item {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .card-image {
+    max-width: 100%;
+  }
+  
+  .card-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  

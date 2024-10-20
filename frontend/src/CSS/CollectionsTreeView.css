@@ -1,0 +1,86 @@
+/* CollectionsTreeView.css */
+.collections-tree-view {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.collection-title{
+  background-color: pink;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;}
+
+.collection-node {
+  background-color: white;
+  border: 1px solid pink;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 7px;
+  
+}
+
+
+.collection-link {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Impact"
+}
+
+
+.collection-link:hover {
+  text-decoration: underline;
+  font-family: "Impact", sans-serif;
+}
+
+.card-link {
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  color: #000204;
+  text-decoration: underline;
+}
+
+.SearchBar{
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+
+}
+
+.Search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.Search-input::placeholder {
+  color: #888;
+}
+
+.Search-icon {
+  margin-right: 8px;
+  color: #888;
+  font-size: 20px;
+}
+
+.Search-bar:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

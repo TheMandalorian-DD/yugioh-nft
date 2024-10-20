@@ -9,16 +9,32 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/lab": "^5.0.0-alpha.151",
+    "@mui/material": "^5.14.16",
+    "@mui/styled-engine": "latest",
+    "@mui/x-tree-view": "^6.17.0",
+    "axios": "^1.6.0",
+    "devextreme-react": "^23.1.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "scryfall-sdk": "^4.2.0",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "@types/react-native": "^0.72.5",
+    "@types/styled-components": "^5.1.14",
     "@vitejs/plugin-react": "^2.1.0",
     "ethers": "^5.7.2",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "web3": "^1.8.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   }
 }
