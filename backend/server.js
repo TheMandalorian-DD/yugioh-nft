@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const { getCards, getAllArchetypes, getSets, getRandomCard, getCardsBySet, getAllSets, getCardSetInfo } = require('./controllers/cardController')
 const { getRaces, getTypes } = require('./controllers/typeRaceController')
 const { addCollection, getAllCollections, mintCard, getCardsCollection, getCardsByAddress, initCollections,
-  initCardsToCollection
+  initCardsToCollection, getMarketplace
 } = require('./controllers/userController')
 const timers = require('node:timers')
 const cors = require('cors')
@@ -35,8 +35,8 @@ app.get('/get-types', getTypes);
 app.post('/add-collection', addCollection);
 app.get('/get-all-collections', getAllCollections);
 app.post('/mint-card', mintCard);
-app.get('/get-cards-collection', getCardsCollection);
 app.get('/get-cards-by-address', getCardsByAddress);
+app.get('/get-marketplace', getMarketplace);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

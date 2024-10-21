@@ -1,8 +1,7 @@
 // MyCollections.tsx
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import UserCollection from './UserCollection';
-import Card from '@/components/Card'
+import Collection from './Collection';
 
 interface CollectionProps {
   wallet: any
@@ -44,9 +43,9 @@ const MyCollections: React.FC<CollectionProps> = ({wallet}) => {
         <div className="loading">Loading...</div>
       ) : (
         collectionData.map((collection) => (
-          <UserCollection
+          <Collection
             key={collection.collectionId}
-            collectionId={collection.collectionId}// Ajoutez une clé unique
+            collectionId={collection.collectionId}
             collectionName={collection.name}
             wallet={wallet}
           />

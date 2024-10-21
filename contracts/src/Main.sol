@@ -6,10 +6,22 @@ import "./Collection.sol";
 
 contract Main is Ownable {
   address private _owner;
+
   struct CollectionInfo {
     string name;
     address collectionAddress;
     uint256 cardCount;
+  }
+
+  Listing[] public marketplace;
+  uint256 public listingPrice = 0.1 ether;
+
+  struct Listing {
+    address seller; uint256 collectionId; uint256 tokenId; uint256 price;
+  }
+
+  struct Listings {
+    uint256 id; Listing info; Collection.Card card;
   }
 
   mapping(uint256 => CollectionInfo) public collections;
@@ -114,5 +126,25 @@ contract Main is Ownable {
     }
 
     return (collectionIds, cardIds);
+  }
+
+  event CardSold(uint256 collectionId, uint256 tokenId, address seller);
+  event SellerAddress(address seller);
+
+  function sellCard(uint256 collectionId, uint256 tokenId) external {
+    Collection collection = Collection(collections[collectionId].collectionAddress);
+    marketplace.push(Listing(msg.sender, collectionId, tokenId, listingPrice));
+    collection.setOnSell(tokenId, msg.sender);
+    emit CardSold(collectionId, tokenId, msg.sender);
+  }
+
+  function getMarketplace() public view returns (Listings[] memory) {
+    Listings[] memory list = new Listings[](uint256(marketplace.length));
+    for (uint256 i = 0; i < marketplace.length; i++) {
+      Collection collection = Collection(collections[marketplace[i].collectionId].collectionAddress);
+      (uint256 id, string memory realID, string memory name, string memory img, string memory rarity, bool onSell) = collection.getCard(marketplace[i].tokenId);
+      list[uint256(i)] = Listings(i, marketplace[i], Collection.Card(id, realID, name, img, rarity, onSell));
+    }
+    return list;
   }
 }

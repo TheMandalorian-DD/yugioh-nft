@@ -5,6 +5,7 @@ import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
 import Header from '@/components/Header'
 import MyCollections from '@/components/MyCollections'
+import Marketplace from '@/components/Marketplace'
 
 type Canceler = () => void
 const useAffect = (
@@ -29,7 +30,7 @@ const useWallet = () => {
   const [details, setDetails] = useState<ethereum.Details>()
   const [contract, setContract] = useState<main.Main>()
   useAffect(async () => {
-    const details_ = await ethereum.connect('silent')
+    const details_ = await ethereum.connect('metamask')
     if (!details_) return
     setDetails(details_)
     const contract_ = await main.init(details_)
@@ -50,7 +51,7 @@ export const App = () => {
       <Header wallet={wallet} />
       <Routes>
         <Route path="/" element={<div>All Cards Collection</div>} />
-        <Route path="/marketplace" element={<div>Duel Marketplace</div>} />
+        <Route path="/marketplace" element={<Marketplace wallet={wallet} />} />
         <Route path="/my-collections" element={<MyCollections wallet={wallet}/>} />
         <Route path="/boosters" element={<div>My Booster Packs</div>} />
       </Routes>

@@ -4,7 +4,7 @@ import Card from './Card';
 import '../css/UserCollection.css';
 import axios from 'axios'
 
-interface UserCollectionProps {
+interface CollectionProps {
   collectionName: string;
   collectionId: number;
   wallet: any;
@@ -17,10 +17,10 @@ interface CardItem {
   name: string;
   img: string;
   rarity: string;
-  redeem: boolean;
+  onSell: boolean;
 }
 
-const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collectionId, wallet }) => {
+const Collection: React.FC<CollectionProps> = ({ collectionName, collectionId, wallet }) => {
 
   const [cardData, setCardData] = useState<CardItem[] | null>(null);
   const [walletAddress, setWalletAddress] = useState<string>("");
@@ -31,6 +31,14 @@ const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collect
       setWalletAddress(wallet.details.account);
     }
   }, [wallet]);
+
+  const sellCard = async (collectionId: number, tokenId: number) => {
+    if (wallet?.contract) {
+      const sell = await wallet.contract.sellCard(collectionId, tokenId);
+      sell.wait().then(getCards);
+    }
+
+  };
 
   const getCards = () => {
     axios
@@ -50,7 +58,7 @@ const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collect
         {cardData ? (
           cardData.length > 0 ? (
             cardData.map((card) => (
-              <Card key={card.cardId} card={card} />
+              <Card key={card.cardId} card={card} onClickSell={() => sellCard(collectionId, card.cardId)} />
             ))
           ) : (
             <div className="no-cards">No cards available.</div> // Message si cardData est vide
@@ -63,4 +71,4 @@ const UserCollection: React.FC<UserCollectionProps> = ({ collectionName, collect
   );
 };
 
-export default UserCollection;
+export default Collection;

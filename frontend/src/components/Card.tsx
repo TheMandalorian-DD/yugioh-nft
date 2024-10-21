@@ -10,21 +10,22 @@ interface CardProps {
     name: string;
     img: string;
     rarity: string;
-    redeem: boolean;
+    onSell: boolean;
   };
+  onClickSell: any;
 }
 
-const Card: React.FC<CardProps> = ({ card }) => {
+const Card: React.FC<CardProps> = ({ card, onClickSell }) => {
   return (
     <div className="card">
       <img src={card.img} alt={card.name} className="card-image" />
       <div className="card-details">
         <h3>{card.name}</h3>
         <p>Rarity: <span className={`rarity ${card.rarity.toLowerCase()}`}>{card.rarity}</span></p>
-        {card.redeem ? (
-          <button className="redeem-button">Redeem</button>
+        {card.onSell ? (
+          <button className="redeem-button disabled">Already on sale</button>
         ) : (
-          <button className="redeem-button disabled">Already Redeemed</button>
+          <button onClick={onClickSell} className="redeem-button">Sell</button>
         )}
       </div>
     </div>

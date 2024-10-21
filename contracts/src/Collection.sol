@@ -15,7 +15,7 @@ contract Collection is ERC721URIStorage {
     string name;
     string img;
     string rarity;
-    bool redeem;
+    bool onSell;
   }
 
   mapping(uint256 => Card) public cards;
@@ -42,7 +42,7 @@ contract Collection is ERC721URIStorage {
     string memory cardName,
     string memory cardImage,
     string memory rarity,
-    bool redeem
+    bool onSell
   ) external returns (uint256) {
     require(_tokenIdCounter < cardCount, "Max card count reached");
 
@@ -56,7 +56,7 @@ contract Collection is ERC721URIStorage {
       name: cardName,
       img: cardImage,
       rarity: rarity,
-      redeem: redeem
+      onSell: onSell
     });
 
     return newCardId;
@@ -65,12 +65,13 @@ contract Collection is ERC721URIStorage {
   function getCard(uint256 cardId) external view returns (uint256, string memory, string memory, string memory, string memory, bool) {
     require(ownerOf(cardId) != address(0), "Card does not exist");
     Card memory card = cards[cardId];
-    return (card.id, card.realID, card.name, card.img, card.rarity, card.redeem);
+    return (card.id, card.realID, card.name, card.img, card.rarity, card.onSell);
   }
 
-  function setRedeemStatus(uint256 cardId, bool newRedeemStatus, address userAddress) public {
+  function setOnSell(uint256 cardId, address userAddress) external {
     require(ownerOf(cardId) == userAddress, "Only the owner can change redeem status");
-    cards[cardId].redeem = newRedeemStatus;
+    cards[cardId].onSell = true;
+    approve(msg.sender, cards[cardId].id);
   }
 
   function transferCard(uint256 cardId, address userFrom, address userTo) external {
@@ -78,6 +79,6 @@ contract Collection is ERC721URIStorage {
     require(msg.sender == userFrom || msg.sender == owner, "Only the card owner or contract owner can initiate a transfer");
 
     _transfer(userFrom, userTo, cardId);
-    setRedeemStatus(cardId, false, userFrom);
+    //setOnSell(cardId, false, userFrom);
   }
 }
