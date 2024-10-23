@@ -71,7 +71,6 @@ contract Collection is ERC721URIStorage {
   function setOnSell(uint256 cardId, address userAddress) external {
     require(ownerOf(cardId) == userAddress, "Only the owner can change redeem status");
     cards[cardId].onSell = true;
-    approve(msg.sender, cards[cardId].id);
   }
 
   function transferCard(uint256 cardId, address userFrom, address userTo) external {

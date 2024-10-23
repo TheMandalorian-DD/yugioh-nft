@@ -115,8 +115,8 @@ getMarketplace = async (req, res) => {
         tokenId: list[1][2].toNumber(),
         price: priceInEther,
         cardId: list[2][0],
-        realId: list[2][1].toNumber(),
-        name: list[2][2].toNumber(),
+        realId: list[2][1],
+        name: list[2][2],
         img: list[2][3],
         rarity: list[2][4],
         onSell: list[2][5]
@@ -161,7 +161,7 @@ initCardsToCollection = async () => {
           .card_sets
           .find(set => set.set_name === collection.name)
           .set_rarity;
-        const tx = await contract.mintCardToUser(index, "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
+        const tx = await contract.mintCardToUser(index, "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC", card.id.toString(), card.name, card.card_images[0].image_url, rarity, false, 1);
         await tx.wait();
         console.log(`${card.name} added to ${collection.name} (${collection.collectionAddress})`);
       }

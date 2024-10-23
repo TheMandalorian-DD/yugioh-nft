@@ -35,9 +35,11 @@ const Marketplace: React.FC<MarketplaceProps> = ({  wallet }) => {
 
   const getCards = () => {
     axios
-      .get(`http://localhost:3000/get-marketplace}`)
+      .get(`http://localhost:3000/get-marketplace`)
       .then((response) => {
-        setCardData(response.data);
+        console.log(response);
+        //console.log(response.data.marketplace);
+        setCardData(response.data.market);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
