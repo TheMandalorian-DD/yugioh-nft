@@ -11,11 +11,14 @@ interface CardProps {
     img: string;
     rarity: string;
     onSell: boolean;
+    owner: string;
   };
   onClickSell: any;
+  onClickBuy: any;
+  user: string;
 }
 
-const Card: React.FC<CardProps> = ({ card, onClickSell }) => {
+const Card: React.FC<CardProps> = ({ card, onClickSell, onClickBuy, user}) => {
   return (
     <div className="card">
       <img src={card.img} alt={card.name} className="card-image" />
@@ -26,6 +29,11 @@ const Card: React.FC<CardProps> = ({ card, onClickSell }) => {
           <button className="redeem-button disabled">Already on sale</button>
         ) : (
           <button onClick={onClickSell} className="redeem-button">Sell</button>
+        )}
+        {card.owner != user ? (
+          <button onClick={onClickBuy} className="redeem-button">Buy</button>
+        ) : (
+          <p></p>
         )}
       </div>
     </div>

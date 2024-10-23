@@ -147,4 +147,16 @@ contract Main is Ownable {
     }
     return list;
   }
+
+  function buyCard(uint256 listingIndex) external payable {
+        require(listingIndex < marketplace.length, "LInd");
+        Collection collection = Collection(collections[marketplace[listingIndex].collectionId].collectionAddress);
+        collection.transferCard(marketplace[listingIndex].tokenId, marketplace[listingIndex].seller, msg.sender);
+
+        // remove the listing
+        if (listingIndex < marketplace.length - 1) {
+            marketplace[listingIndex] = marketplace[marketplace.length - 1];
+        }
+        marketplace.pop();
+    }
 }

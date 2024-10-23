@@ -75,9 +75,10 @@ contract Collection is ERC721URIStorage {
 
   function transferCard(uint256 cardId, address userFrom, address userTo) external {
     require(ownerOf(cardId) == userFrom, "UserFrom is not the owner of the card");
-    require(msg.sender == userFrom || msg.sender == owner, "Only the card owner or contract owner can initiate a transfer");
+    // require(msg.sender == userFrom || msg.sender == userTo, "Only the card owner or contract owner can initiate a transfer");
 
     _transfer(userFrom, userTo, cardId);
-    //setOnSell(cardId, false, userFrom);
+    cards[cardId].onSell = false;
+
   }
 }

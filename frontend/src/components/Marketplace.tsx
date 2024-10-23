@@ -45,6 +45,13 @@ const Marketplace: React.FC<MarketplaceProps> = ({  wallet }) => {
         console.error('Error fetching data:', error);
       });
   }
+  const buyCard = async (listingId: number) => {
+    if (wallet?.contract) {
+        const sell = await wallet.contract.buyCard(listingId);
+        sell.wait().then(getCards)
+    }
+
+};
 
   return (
     <div className="collection-container">
@@ -53,15 +60,20 @@ const Marketplace: React.FC<MarketplaceProps> = ({  wallet }) => {
         {cardData ? (
           cardData.length > 0 ? (
             cardData.map((list) => (
-              <Card key={list.cardId} card={ {
+              <Card key={list.cardId}
+               card={ {
                 collectionId: list.collectionId,
                 cardId: list.cardId,
                 realID: list.realId,
                 name: list.name,
                 img: list.img,
                 rarity: list.rarity,
-                onSell: list.onSell
-              }} onClickSell={() => {}} />
+                onSell: list.onSell,
+                owner: list.seller
+              }} 
+              onClickSell={() => {}} 
+              onClickBuy={() =>{buyCard(list.id)}}
+              user = {walletAddress}/>
             ))
           ) : (
             <div className="no-cards">No cards available.</div>
