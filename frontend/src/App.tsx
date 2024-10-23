@@ -6,6 +6,7 @@ import * as main from '@/lib/main'
 import Header from '@/components/Header'
 import MyCollections from '@/components/MyCollections'
 import Marketplace from '@/components/Marketplace'
+import AllCollections from './components/AllCollections';
 
 type Canceler = () => void
 const useAffect = (
@@ -50,7 +51,8 @@ export const App = () => {
     <Router>
       <Header wallet={wallet} />
       <Routes>
-        <Route path="/" element={<div>All Cards Collection</div>} />
+        <Route path="/" element={<AllCollections />} />
+        {/* <Route path="/" element={<div>All Cards Collection</div>} /> */}
         <Route path="/marketplace" element={<Marketplace wallet={wallet} />} />
         <Route path="/my-collections" element={<MyCollections wallet={wallet}/>} />
         <Route path="/boosters" element={<div>My Booster Packs</div>} />
