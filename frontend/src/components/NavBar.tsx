@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../css/NavBar.css";
 
 // Import du logo
-import logo from '../static/yugiyoo.png';
+import logo from '../static/Yu-Gu-Oh_-logo-FA1A029B70-seeklogo.com.png';
+import profilePic from '../static/image1.jpeg'; 
 
 interface Props {
   wallet: any;
@@ -23,7 +25,7 @@ const NavBar: React.FC<Props> = ({ wallet }) => {
         
         {/* Logo à gauche */}
         <NavLink to="/" className="navbar-brand">
-          <img src={logo} alt="Logo" width="100" height="30" className="d-inline-block align-top" />
+          <img src={logo} alt="Logo" width="100" height="30"  />
         </NavLink>
 
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,11 +35,11 @@ const NavBar: React.FC<Props> = ({ wallet }) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           {/* Ajout d'espace entre le logo et les liens de navigation */}
           <ul className="navbar-nav ms-auto"> {/* Utilisation de `ms-auto` pour pousser la nav à droite */}
-            <li className="nav-item me-4"> {/* `me-4` ajoute de l'espace à droite des items */}
+            {/* <li className="nav-item me-4"> 
               <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                 All Collections
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item me-4">
               <NavLink to="/marketplace" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                 Marketplace
@@ -60,7 +62,7 @@ const NavBar: React.FC<Props> = ({ wallet }) => {
               onClick={toggleDropdown} 
               aria-expanded={isDropdownOpen}
             >
-              Account <span className="caret"></span> {/* Flèche */}
+              <img src={profilePic} alt="Profile" className="profilePic" /> 
             </a>
             {isDropdownOpen && (
               <div className="dropdown-menu dropdown-menu-end show" style={{ display: 'block' }}>
