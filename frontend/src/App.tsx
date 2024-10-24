@@ -50,7 +50,7 @@ export const App = () => {
     <Router>
       <Header wallet={wallet} />
       <Routes>
-        <Route path="/" element={<div>All Cards Collection</div>} />
+        {/* <Route path="/" element={<div>All Cards Collection</div>} /> */}
         <Route path="/marketplace" element={<Marketplace wallet={wallet} />} />
         <Route path="/my-collections" element={<MyCollections wallet={wallet}/>} />
         <Route path="/boosters" element={<div>My Booster Packs</div>} />
