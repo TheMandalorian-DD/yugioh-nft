@@ -9,14 +9,14 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ wallet }) => {
   return (
     <header className="page-header">
-      <div className="header-overlay">
+      {/* <div className="header-overlay">
         <div className="header-content">
           <div className="logo">
             <h1>Yu-Gi-Oh! Duelist Kingdom</h1>
             <p className="tagline">Unleash your cards and duel like a champion!</p>
           </div>
         </div>
-      </div>
+      </div> */}
       <NavBar wallet={wallet} />
     </header>
   );
