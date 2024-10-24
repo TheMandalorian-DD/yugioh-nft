@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../css/NavBar.css";
 
 // Import du logo
-import logo from '../static/Yu-Gu-Oh_-logo-FA1A029B70-seeklogo.com.png';
+import logo from '../static/yugiyoo.png';
 import profilePic from '../static/image1.jpeg'; 
 
 interface Props {
